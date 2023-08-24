@@ -242,7 +242,7 @@ export default {
 
           ans = fragments.join("");
           
-          messageService.createMessage(ans, citations).then((response) => {
+          messageService.createMessage(ans, response.data.data_points, citations).then((response) => {
             const replyMessage = {
               agent: "bot",
               ...response
@@ -251,7 +251,7 @@ export default {
           });
         }
         else{
-          messageService.createMessage(ans).then((response) => {
+          messageService.createMessage(ans, response.data.data_points).then((response) => {
             const replyMessage = {
               agent: "bot",
               ...response
