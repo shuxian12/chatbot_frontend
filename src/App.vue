@@ -68,7 +68,7 @@ Sources:\
 
 var count = 0;
 var history = [];
-axios.defaults.baseURL = "http://127.0.0.1:5000"//"https://advantech-intern-chatbot-api.azurewebsites.net";//"http://localhost:5000";
+axios.defaults.baseURL = "https://advantech-intern-chatbot-api.azurewebsites.net";//"http://localhost:5000";
 
 export default {
   name: "App",
@@ -120,8 +120,8 @@ export default {
       });
 
       // this.getResponse();
-      // this.chat(value["text"]);
-      this.chat_test(value["text"]);
+      this.chat(value["text"]);
+      // this.chat_test(value["text"]);
     },
 
     chat(query) {
@@ -129,17 +129,8 @@ export default {
       this.inputDisable = true;
       this.botTyping = true;
 
-      // for (let i = 1; i < this.data.length; i += 2) {
-      //   console.log(this.data[i].text, this.data[i + 1].text);
-      //   var h = {
-      //     user: this.data[i].text,
-      //     bot: this.data[i + 1].text
-      //   };
-      //   history.push(h);
-      // }
-
-      if (history.length > 5) {
-        history = history.slice(-5);
+      if (history.length > 8) {
+        history = history.slice(-8);
       }
       history.push({
         user: query
@@ -172,18 +163,13 @@ export default {
         console.log(">> response: ", response);
         // parsed_ans = response.data.answer.trim();
         // console.log('-----')
-        const replyMessage = {
-          agent: "bot",
-          type: "text",
-          text: response.data.answer,
-          // options: [
-          //   {
-          //     text: 'View ticket',
-          //     value: 'https://google.com',
-          //     action: 'url'
-          //   }
-          // ]
-        };
+        const replyMessage = messageService.createMessage(response.data.answer).then((msg) => {
+          const replyMessage = {
+            agent: "bot",
+            ...msg
+          };
+          this.data.push(replyMessage);
+        });
         history[history.length - 1]["bot"] = response.data.answer;
 
         this.data.push(replyMessage);
@@ -203,7 +189,7 @@ export default {
         history = history.slice(-8);
       }
       history.push({
-        'user': query
+        user: query
       });
 
       console.log(axios.defaults.baseURL)
@@ -242,19 +228,19 @@ export default {
 
           ans = fragments.join("");
           
-          messageService.createMessage(ans, response.data.data_points, citations).then((response) => {
+          messageService.createMessage(ans, response.data.data_points, citations).then((msg) => {
             const replyMessage = {
               agent: "bot",
-              ...response
+              ...msg
             };
             this.data.push(replyMessage);
           });
         }
         else{
-          messageService.createMessage(ans, response.data.data_points).then((response) => {
+          messageService.createMessage(ans, response.data.data_points).then((msg) => {
             const replyMessage = {
               agent: "bot",
-              ...response
+              ...msg
             };
             this.data.push(replyMessage);
           });
@@ -284,9 +270,5 @@ export default {
 .qkb-msg-bubble-component__text {
   text-align: left;
   white-space: pre-wrap;
-}
-
-.qkb-mb-button-options__btn {
-  font-size: 0.4rem;
 }
 </style>

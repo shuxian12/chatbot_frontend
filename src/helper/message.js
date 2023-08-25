@@ -7,7 +7,7 @@ function getCitationFilePath(citation) {
 return axios.defaults.baseURL + `/content/${citation}`;
 }
 
-function createMessage (message, data_points, citations=[]) {
+function createMessage (message, data_points=[], citations=[]) {
     // if (citations !== []) {
     //     const options = []
     //     citations.forEach(function(file_name, i) {
@@ -38,6 +38,18 @@ function createMessage (message, data_points, citations=[]) {
     //         }, 0)
     //     })
     // }
+
+    if (data_points === [] && citations === []) {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve({
+                    'type': 'text',
+                    'text': message,
+                })
+            }, 0)
+        })
+    }
+
     const options = []
     if (citations !== []) {
         citations.forEach(function(file_name, i) {
