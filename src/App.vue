@@ -92,11 +92,10 @@ export default {
   },
   methods: {
     botStart() {
-      console.log("=== count ===", count);
+      // console.log("=== count ===", count);
       if (count === 0) {
         console.log("=== botStart ===");
         this.botTyping = true;
-        setTimeout(() => { }, 1000);
         setTimeout(() => {
           this.botTyping = false;
           this.inputDisable = false;
@@ -105,7 +104,7 @@ export default {
             type: "text",
             text: "Hello"
           });
-        }, 1000);
+        }, 2000);
         count++;
       }
     },
@@ -136,7 +135,6 @@ export default {
         user: query
       });
 
-      console.log(axios.defaults.baseURL)
       axios.post("/chat", {
         history: history,
         approach: "rrr",
@@ -161,9 +159,8 @@ export default {
         { headers: { "Content-Type": "application/json" } }
       ).then((response) => {
         console.log(">> response: ", response);
-        // parsed_ans = response.data.answer.trim();
-        // console.log('-----')
-        const replyMessage = messageService.createMessage(response.data.answer).then((msg) => {
+
+        messageService.createMessage(response.data.answer).then((msg) => {
           const replyMessage = {
             agent: "bot",
             ...msg
@@ -172,7 +169,6 @@ export default {
         });
         history[history.length - 1]["bot"] = response.data.answer;
 
-        this.data.push(replyMessage);
 
         // finish
         this.botTyping = false;
@@ -181,7 +177,7 @@ export default {
     },
 
     chat_test(query) {
-      console.log("=== chat ===");
+      console.log("=== chat test ===");
       this.inputDisable = true;
       this.botTyping = true;
 
@@ -192,7 +188,6 @@ export default {
         user: query
       });
 
-      console.log(axios.defaults.baseURL)
       axios.post("/chat", {
         history: history,
         approach: "rrr",
