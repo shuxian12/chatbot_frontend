@@ -32,14 +32,14 @@ const request = {
     }
   };
 
-// const prompt_chat = promptService.prompt_chat;
-// const prompt_chat_new = promptService.prompt_chat_ref;
-// request.approach = "rrr";
+const prompt_chat = prompt_gpt3;
+const prompt_chat_new = prompt_gpt3_ref;
+request.approach = "rrr";
 
 // if you want to use gpt4, please use the following prompt
-const prompt_chat = prompt_chat_gpt4; //promptService.prompt_chat_gpt4;
-const prompt_chat_new = prompt_chat_gpt4_ref; //promptService.prompt_chat_gpt4_ref;
-request.approach = "gpt4";
+// const prompt_chat = prompt_chat_gpt4; //promptService.prompt_chat_gpt4;
+// const prompt_chat_new = prompt_chat_gpt4_ref; //promptService.prompt_chat_gpt4_ref;
+// request.approach = "gpt4";
 
 // overrides: {
 //   semantic_ranker: options.overrides?.semanticRanker,
