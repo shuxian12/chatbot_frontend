@@ -57,8 +57,8 @@ var count = 0;
 var history = [];
 
 // backend api url
-// axios.defaults.baseURL = "https://advantech-intern-chatbot-api.azurewebsites.net";
-axios.defaults.baseURL = "http://20.222.54.119:5000";
+axios.defaults.baseURL = "https://advantech-intern-chatbot-api.azurewebsites.net";
+// axios.defaults.baseURL = "http://20.222.54.119:5000";
 
 export default {
   name: "App",
